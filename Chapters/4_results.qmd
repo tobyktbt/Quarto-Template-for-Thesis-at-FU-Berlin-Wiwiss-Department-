@@ -1,0 +1,66 @@
+# Results
+
+Using the simulated data from the methodology chapter, we estimate an ordinary least squares regression of $y$ on $x$.
+
+```{python}
+#| label: tbl-ols-results
+#| tbl-cap: "OLS regression results for the simulated DGP"
+#| echo: true
+
+X = np.column_stack([np.ones(n), x])
+k = X.shape[1]
+
+beta_hat = np.linalg.inv(X.T @ X) @ (X.T @ y)
+y_hat = X @ beta_hat
+residuals = y - y_hat
+
+sigma2_hat = (residuals @ residuals) / (n - k)
+vcov_hat = sigma2_hat * np.linalg.inv(X.T @ X)
+se_beta = np.sqrt(np.diag(vcov_hat))
+t_stats = beta_hat / se_beta
+
+r2 = 1 - (residuals @ residuals) / np.sum((y - y.mean()) ** 2)
+
+results_table = pd.DataFrame(
+    {
+        "Coefficient": ["Intercept", "x"],
+        "Estimate": beta_hat,
+        "Std. Error": se_beta,
+        "t-Statistic": t_stats,
+    }
+)
+
+results_table
+```
+
+Model fit summary: $R^2$ is printed below.
+
+```{python}
+#| echo: false
+
+print(f"R-squared: {r2:.3f}")
+```
+
+```{python}
+#| label: fig-regression-fit
+#| fig-cap: "Linear regression fit on simulated DGP data"
+#| echo: true
+
+plt.figure(figsize=(7, 4.5))
+plt.scatter(x, y, alpha=0.7, label="Simulated observations")
+
+order = np.argsort(x)
+plt.plot(
+    x[order],
+    y_hat[order],
+    color="crimson",
+    linewidth=2.0,
+    label="Fitted line",
+)
+
+plt.xlabel("x")
+plt.ylabel("y")
+plt.legend()
+plt.tight_layout()
+plt.show()
+```

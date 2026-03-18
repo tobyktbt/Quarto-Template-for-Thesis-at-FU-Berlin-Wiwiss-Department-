@@ -1,0 +1,10 @@
+.venv/
+.quarto/
+.deno/
+_output/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+/.quarto/
+**/*.quarto_ipynb

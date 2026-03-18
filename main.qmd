@@ -1,0 +1,341 @@
+---
+format:
+  pdf:
+    # ── Page geometry ──────────────────────────────────────────────────────────
+    geometry:
+      - a4paper
+      - top=2.5cm
+      - bottom=2.5cm
+      - left=3cm
+      - right=2.5cm
+      - marginparwidth=1.25cm
+
+    # ── Fonts & line spacing ───────────────────────────────────────────────────
+    mainfont: "Times New Roman"          
+    fontsize: 12pt
+    linestretch: 1.25
+
+    # ── Table of contents ──────────────────────────────────────────────────────
+    toc: false
+    toc-depth: 3
+    lof: false                           # list of figures
+    lot: false                           # list of tables
+    number-sections: true
+
+    # ── Header / footer ────────────────────────────────────────────────────────
+    # NOTE: Do NOT set `pagestyle: fancy` here — it runs before fancyhdr is
+    #       loaded and causes "Undefined control sequence" errors.
+    #       Instead, \pagestyle{fancy} is set inside include-in-header below.
+    include-in-header:
+      text: |
+        % ── Packages ──────────────────────────────────────────────────────────
+        \usepackage{fancyhdr}
+        \usepackage{mathptmx}
+        \usepackage{multirow}
+        \usepackage{array}
+        \usepackage{booktabs}
+        \usepackage{float}
+        \floatstyle{plaintop}
+        \restylefloat{table}
+        \usepackage{dcolumn}
+        \newcolumntype{d}[1]{D..{#1}}
+        \newcommand{\mc}[1]{\multicolumn{1}{c@{}}{#1}}
+        \usepackage{siunitx}
+        \sisetup{round-mode=places, round-precision=4}
+        \usepackage{adjustbox}
+        \usepackage{caption}
+        \captionsetup[table]{position=top}
+        \captionsetup[table]{font={footnotesize}}
+        \usepackage{xcolor}
+        \usepackage{enumitem}
+        \usepackage{pdflscape}
+        \usepackage{rotating}
+        \usepackage{scalefnt}
+        \usepackage{tabularx}
+        \usepackage{threeparttable}
+        \usepackage{amssymb}
+        \usepackage[section]{placeins}
+        \usepackage{pgfplots}
+        \pgfplotsset{compat=1.18}
+        \usepackage{tikz}
+        \newif\ifsubmission
+        \submissionfalse
+        \AtBeginDocument{
+          \ifsubmission
+            \hypersetup{colorlinks=true, allcolors=black}
+          \else
+            \hypersetup{colorlinks=true, allcolors=blue}
+          \fi
+        }
+
+        % ── Caption helpers ────────────────────────────────────────────────────
+        \newcommand{\figurenote}[1]{\caption*{Note: #1}}
+
+        % ── Fancy page style: right-aligned page number, no header rule ────────
+        \pagestyle{fancy}
+        \fancyhf{}
+        \renewcommand{\headrulewidth}{0pt}
+        \fancyfoot[R]{\thepage}
+        \fancypagestyle{plain}{%
+          \fancyhf{}%
+          \renewcommand{\headrulewidth}{0pt}%
+          \fancyfoot[R]{\thepage}%
+        }
+        \fancypagestyle{landscape}{%
+          \fancyhf{}
+          \renewcommand{\headrulewidth}{0pt}
+          \fancyhead[R]{\rotatebox{90}{\thepage}}
+        }
+
+        % ── autoref label overrides (adjust for appendix tables/figures) ──────
+        \providecommand{\tableautorefname}{Table}
+        \providecommand{\figureautorefname}{Figure}
+        \renewcommand{\tableautorefname}{Table A}
+        \renewcommand{\figureautorefname}{Figure A}
+        \newcommand{\tableref}[1]{Table A\ref{#1}}
+
+        % ── Sideways table helper ──────────────────────────────────────────────
+        \newcommand{\scaleTable}[2]{%
+          \begingroup
+          \scalefont{#1}
+          \begin{sidewaystable}[htbp]
+            \centering
+            #2
+          \end{sidewaystable}
+          \endgroup
+        }
+
+    # ── Language ───────────────────────────────────────────────────────────────
+    lang: en
+
+    # ── Bibliography ───────────────────────────────────────────────────────────
+    cite-method: natbib
+    natbiboptions: round
+
+    # ── Keep tex for debugging (set false for final submission) ───────────────
+    keep-tex: false
+
+    # ── Front matter: title page ──────────────────────────────────────────────
+    include-before-body:
+      text: |
+        \thispagestyle{empty}
+        \begin{center}
+          \vspace*{-10mm}
+          {\LARGE PROFESSORSHIP FOR \\
+          YOUR DEPARTMENT \\[1mm]}
+          OF YOUR UNIVERSITY \\
+          \vspace*{1cm}
+          % \includegraphics[width=0.18\textwidth]{Images/fu_logo.pdf}
+          \vspace*{1cm}
+          {\Large \textbf{(Bachelor's/ Master's Thesis/ Doctoral Dissertation / Seminar Paper)}} \\
+          \vspace{1cm}
+          {\Large \textbf{Your Thesis Title}\\ust
+          Your Subtitle or Additional Information\\[4mm]}
+          \vspace{1.5cm}
+          {\LARGE Your Name} \\[15mm]
+          \parbox{120mm}{%
+            \begin{large}
+              \begin{tabbing}
+                Supervisor: \hspace{.7cm} \= Your Supervisor \\[4mm]
+                Semester: \> Your Semester \\
+                Author: \> Your Name \\
+                Matrikel-Nr.: \> Your Student ID \\
+                Address: \> Your Address \\
+                Email: \> your.email@example.com \\
+                Uni-Email: \> your.uni@university.edu \\
+                Field of Study: \> Your Programme, Degree \\[8mm]
+                \textbf{Deadline: DD.MM.YYYY} \> \textbf{} \\
+              \end{tabbing}
+            \end{large}
+          }
+        \end{center}
+        \clearpage{\pagestyle{empty}\cleardoublepage}
+
+        % ══════════════════════════════════════════════════════════════════════
+        %  ABSTRACT (page numbering suppressed until main body)
+        % ══════════════════════════════════════════════════════════════════════
+        \pagenumbering{gobble}
+        \newpage
+
+    # ── Back matter: declaration of independent work ──────────────────────────
+    include-after-body:
+      text: |
+        % ══════════════════════════════════════════════════════════════════════
+        %  EIGENSTÄNDIGKEITSERKLÄRUNG  (Declaration of Independent Work)
+        %  Required by most German universities — adjust wording as needed.
+        % ══════════════════════════════════════════════════════════════════════
+        \newpage
+        \clearpage
+        \pagenumbering{gobble}
+        {\linespread{0.7}
+        \begin{small}
+        \noindent
+        \\
+        \textbf{Eigenständigkeitserklärung}
+        \vspace{0.5cm}\\
+        1.\ Hiermit versichere ich,
+        \vspace{0.5cm}
+        \begin{itemize}[nosep,
+                        before=\vspace{-\baselineskip},
+                        after=\vspace{-\baselineskip}]
+          \item dass ich die von mir vorgelegte Arbeit selbständig abgefasst habe,
+          \item dass ich keine weiteren Hilfsmittel verwendet habe als diejenigen,
+                die im Vorfeld explizit zugelassen und von mir angegeben wurden,
+          \item dass ich die Stellen der Arbeit, die dem Wortlaut oder dem Sinn nach
+                anderen Werken (dazu zählen auch Internetquellen und KI-basierte Tools)
+                entnommen sind, unter Angabe der Quelle kenntlich gemacht habe und
+          \item dass ich die vorliegende Arbeit noch nicht für andere Prüfungen
+                eingereicht habe.
+        \end{itemize}
+        \vspace{1cm}
+        2.\ Mir ist bewusst,
+        \vspace{0.5cm}
+        \begin{itemize}[nosep,
+                        before=\vspace{-\baselineskip},
+                        after=\vspace{-\baselineskip}]
+          \item dass ich diese Prüfung nicht bestanden habe, wenn ich die mir bekannte
+                Frist für die Einreichung meiner schriftlichen Arbeit versäume,
+          \item dass ich im Falle eines Täuschungsversuchs diese Prüfung nicht
+                bestanden habe,
+          \item dass ich im Falle eines schwerwiegenden Täuschungsversuchs ggf.\ die
+                Gesamtprüfung endgültig nicht bestanden habe und in diesem Studiengang
+                nicht mehr weiter studieren darf und
+          \item dass ich, sofern ich zur Erstellung dieser Arbeit KI-basierter Tools
+                verwendet habe, die Verantwortung für eventuell durch die KI generierte
+                fehlerhafte oder verzerrte (bias) Inhalte, fehlerhafte Referenzen,
+                Verstöße gegen das Datenschutz- und Urheberrecht oder Plagiate trage.
+        \end{itemize}
+        \vspace{0.7cm}
+        \noindent
+        Datum \hspace{1cm} Berlin \\
+        \\
+        Unterschrift Studierende*r
+        \end{small}}
+  html: default
+
+bibliography: references.bib
+---
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     TABLE OF CONTENTS / LISTS
+     ══════════════════════════════════════════════════════════════════════════ -->
+
+\tableofcontents
+\clearpage
+\listoffigures
+\clearpage
+\listoftables
+\clearpage
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     LIST OF ABBREVIATIONS  — Replace with your own entries
+     ══════════════════════════════════════════════════════════════════════════ -->
+
+\section*{List of Abbreviations}
+
+| Abbreviation | Full Form |
+|:-------------|:----------|
+| e.g.         | *exempli gratia* — for example |
+| i.e.         | *id est* — that is |
+| etc.         | *et cetera* — and so on |
+
+: {tbl-colwidths="[25,75]"}
+
+<!-- Add your abbreviations to the table above -->
+
+\newpage
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     LIST OF SYMBOLS AND EQUATIONS  — Replace with your own entries
+     ══════════════════════════════════════════════════════════════════════════ -->
+
+\section*{List of Symbols and Equations}
+
+**Example Equation**
+
+$$
+\text{(1)}\quad y_i = \beta_0 + \beta_1 x_i + \varepsilon_i
+$$
+
+**Symbols**
+
+| Symbol | Description |
+|:-------|:-----------|
+| $y_i$  | Dependent variable for observation $i$ |
+| $x_i$  | Independent variable for observation $i$ |
+| $\beta_0$ | Intercept |
+| $\beta_1$ | Slope coefficient |
+| $\varepsilon_i$ | Error term |
+
+<!-- Add your symbols and equations above -->
+
+\newpage
+\pagenumbering{arabic}
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     ABSTRACT
+     ══════════════════════════════════════════════════════════════════════════ -->
+
+## Abstract {.unnumbered}
+
+{{< include Chapters/abstract.qmd >}}
+
+\newpage
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     CHAPTER 1 — INTRODUCTION
+     ══════════════════════════════════════════════════════════════════════════ -->
+
+{{< include Chapters/1_introduction.qmd >}}
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     CHAPTER 2 — LITERATURE REVIEW
+     ══════════════════════════════════════════════════════════════════════════ -->
+
+{{< include Chapters/2_literature_review.qmd >}}
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     CHAPTER 3 — METHODOLOGY
+     ══════════════════════════════════════════════════════════════════════════ -->
+
+{{< include Chapters/3_methodology.qmd >}}
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     CHAPTER 4 — RESULTS
+     ══════════════════════════════════════════════════════════════════════════ -->
+
+{{< include Chapters/4_results.qmd >}}
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     CHAPTER 5 — DISCUSSION
+     ══════════════════════════════════════════════════════════════════════════ -->
+
+{{< include Chapters/5_discussion.qmd >}}
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     CHAPTER 6 — CONCLUSION
+     ══════════════════════════════════════════════════════════════════════════ -->
+
+{{< include Chapters/6_conclusion.qmd >}}
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     REFERENCES
+     (natbib / apalike; Quarto renders this automatically from references.bib)
+     ══════════════════════════════════════════════════════════════════════════ -->
+
+\newpage
+\pagenumbering{Roman}
+
+## References {.unnumbered}
+
+::: {#refs}
+:::
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     APPENDIX
+     ══════════════════════════════════════════════════════════════════════════ -->
+
+\newpage
+
+{{< include Chapters/appendix.qmd >}}
