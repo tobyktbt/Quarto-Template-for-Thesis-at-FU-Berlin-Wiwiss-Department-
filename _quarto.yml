@@ -2,6 +2,9 @@ project:
   type: default
   output-dir: _output
 
+format:
+  pdf: default
+
 jupyter: python3
 
 bibliography: references.bib

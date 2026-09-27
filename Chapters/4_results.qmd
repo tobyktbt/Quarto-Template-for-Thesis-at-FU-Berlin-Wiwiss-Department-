@@ -5,7 +5,7 @@ Using the simulated data from the methodology chapter, we estimate an ordinary l
 ```{python}
 #| label: tbl-ols-results
 #| tbl-cap: "OLS regression results for the simulated DGP"
-#| echo: true
+#| echo: false
 
 X = np.column_stack([np.ones(n), x])
 k = X.shape[1]
@@ -33,34 +33,14 @@ results_table = pd.DataFrame(
 results_table
 ```
 
-Model fit summary: $R^2$ is printed below.
+\tablenote{OLS estimates based on simulated observations ($n=120$). Standard errors are computed using the homoskedastic asymptotic variance-covariance matrix.}
 
-```{python}
-#| echo: false
+Model fit summary: $R^2 = 0.686$.
 
-print(f"R-squared: {r2:.3f}")
-```
+## Empirical Visualisations
 
-```{python}
-#| label: fig-regression-fit
-#| fig-cap: "Linear regression fit on simulated DGP data"
-#| echo: true
+As recommended in the decoupled workflow architecture, figures can be generated ahead of time via `code/main.py` and saved as publication-ready vector PDFs (`plots/*.pdf`). They are included in the manuscript using standard Markdown syntax with cross-reference labels and `\figurenote`:
 
-plt.figure(figsize=(7, 4.5))
-plt.scatter(x, y, alpha=0.7, label="Simulated observations")
+![Linear regression fit on simulated DGP data](plots/fig1_regression_fit.pdf){#fig-regression-fit width=85%}
 
-order = np.argsort(x)
-plt.plot(
-    x[order],
-    y_hat[order],
-    color="crimson",
-    linewidth=2.0,
-    label="Fitted line",
-)
-
-plt.xlabel("x")
-plt.ylabel("y")
-plt.legend()
-plt.tight_layout()
-plt.show()
-```
+\figurenote{Simulated observations with fitted OLS regression line ($\beta_0 = 2.0, \beta_1 = 1.5, \sigma = 1.0$). Generated as a vector graphic via \texttt{code/main.py}.}

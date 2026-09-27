@@ -1,10 +1,51 @@
-.venv/
+# ── Quarto & Jupyter Internals ────────────────────────────────────────────────
 .quarto/
-.deno/
-_output/
-__pycache__/
-*.pyc
-.ipynb_checkpoints/
-
 /.quarto/
 **/*.quarto_ipynb
+.jupyter_cache/
+.ipynb_checkpoints/
+*_cache/
+*_files/
+
+# ── Build Output Directory ────────────────────────────────────────────────────
+# Ignore temporary build files, keep compiled PDFs
+_output/**
+!_output/
+!_output/*.pdf
+
+# ── LaTeX & Pandoc Intermediate Artifacts ─────────────────────────────────────
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.nav
+*.out
+*.run.xml
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+*.xdv
+main.tex
+
+# ── HTML Artifacts ────────────────────────────────────────────────────────────
+*.html
+
+# ── Python / Virtual Environments ─────────────────────────────────────────────
+.venv/
+.deno/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ── Data & Raw Datasets ───────────────────────────────────────────────────────
+data/
+*.csv
+
+# ── Explicit Whitelist ────────────────────────────────────────────────────────
+!*.pdf

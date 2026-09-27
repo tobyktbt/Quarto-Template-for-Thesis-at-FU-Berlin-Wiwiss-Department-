@@ -11,6 +11,8 @@ $$
 
 where we set $\beta_0=2.0$, $\beta_1=1.5$, and $\sigma=1.0$.
 
+> **Best Practice Note:** For larger empirical projects, execute data preparation and simulation in standalone scripts (e.g., `code/main.py`), and store raw/processed datasets in `data/`. For quick demonstrations, inline code chunks like the one below are also supported.
+
 ```{python}
 #| label: dgp-simulation
 #| echo: true

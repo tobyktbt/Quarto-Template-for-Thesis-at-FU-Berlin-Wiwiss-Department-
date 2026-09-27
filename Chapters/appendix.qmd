@@ -1,3 +1,7 @@
-# Appendix {.unnumbered}
+# Appendix {.unnumbered .unlisted}
 
 <!-- Add your appendix tables, figures, and supplementary material here -->
+
+## Appendix A: Supplementary Material {.unnumbered .unlisted}
+
+This is a demonstration of how appendix sections should be tagged with `{.unnumbered .unlisted}` so that only the top-level "Appendix" appears in the Table of Contents, keeping it clean and readable.

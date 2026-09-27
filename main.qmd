@@ -22,6 +22,10 @@ format:
     lot: false                           # list of tables
     number-sections: true
 
+    # ── Float positioning ("HERE") ─────────────────────────────────────────────
+    fig-pos: "H"
+    tbl-pos: "H"
+
     # ── Header / footer ────────────────────────────────────────────────────────
     # NOTE: Do NOT set `pagestyle: fancy` here — it runs before fancyhdr is
     #       loaded and causes "Undefined control sequence" errors.
@@ -37,6 +41,7 @@ format:
         \usepackage{float}
         \floatstyle{plaintop}
         \restylefloat{table}
+        \restylefloat{figure}
         \usepackage{dcolumn}
         \newcolumntype{d}[1]{D..{#1}}
         \newcommand{\mc}[1]{\multicolumn{1}{c@{}}{#1}}
@@ -44,8 +49,8 @@ format:
         \sisetup{round-mode=places, round-precision=4}
         \usepackage{adjustbox}
         \usepackage{caption}
-        \captionsetup[table]{position=top}
-        \captionsetup[table]{font={footnotesize}}
+        \captionsetup[table]{position=top, font={footnotesize}}
+        \captionsetup[figure]{position=top, font={footnotesize}}
         \usepackage{xcolor}
         \usepackage{enumitem}
         \usepackage{pdflscape}
@@ -68,8 +73,9 @@ format:
           \fi
         }
 
-        % ── Caption helpers ────────────────────────────────────────────────────
-        \newcommand{\figurenote}[1]{\caption*{Note: #1}}
+        % ── Unified notes under figures and tables ────────────────────────────
+        \newcommand{\figurenote}[1]{{\par\vspace{1mm}\noindent\footnotesize \textit{Note:} #1\par\vspace{2mm}}}
+        \newcommand{\tablenote}[1]{{\par\vspace{1mm}\noindent\footnotesize \textit{Note:} #1\par\vspace{2mm}}}
 
         % ── Fancy page style: right-aligned page number, no header rule ────────
         \pagestyle{fancy}
@@ -129,8 +135,8 @@ format:
           \vspace*{1cm}
           {\Large \textbf{(Bachelor's/ Master's Thesis/ Doctoral Dissertation / Seminar Paper)}} \\
           \vspace{1cm}
-          {\Large \textbf{Your Thesis Title}\\ust
-          Your Subtitle or Additional Information\\[4mm]}
+          {\Large \textbf{Your Thesis Title}\\[2mm]
+          \large Your Subtitle or Additional Information\\[4mm]}
           \vspace{1.5cm}
           {\LARGE Your Name} \\[15mm]
           \parbox{120mm}{%
@@ -152,9 +158,10 @@ format:
         \clearpage{\pagestyle{empty}\cleardoublepage}
 
         % ══════════════════════════════════════════════════════════════════════
-        %  ABSTRACT (page numbering suppressed until main body)
+        %  ABSTRACT & FRONT MATTER (roman page numbering, empty style)
         % ══════════════════════════════════════════════════════════════════════
-        \pagenumbering{gobble}
+        \pagenumbering{roman}
+        \pagestyle{empty}
         \newpage
 
     # ── Back matter: declaration of independent work ──────────────────────────
@@ -207,11 +214,10 @@ format:
         \end{itemize}
         \vspace{0.7cm}
         \noindent
-        Datum \hspace{1cm} Berlin \\
+        Berlin, \ifnum\day<10 0\fi\number\day.\ifnum\month<10 0\fi\number\month.\number\year \\
         \\
         Unterschrift Studierende*r
         \end{small}}
-  html: default
 
 bibliography: references.bib
 ---
@@ -271,7 +277,6 @@ $$
 <!-- Add your symbols and equations above -->
 
 \newpage
-\pagenumbering{arabic}
 
 <!-- ══════════════════════════════════════════════════════════════════════════
      ABSTRACT
@@ -282,6 +287,8 @@ $$
 {{< include Chapters/abstract.qmd >}}
 
 \newpage
+\pagenumbering{arabic}
+\pagestyle{fancy}
 
 <!-- ══════════════════════════════════════════════════════════════════════════
      CHAPTER 1 — INTRODUCTION
@@ -326,8 +333,11 @@ $$
 
 \newpage
 \pagenumbering{Roman}
+\pagestyle{fancy}
+\phantomsection
+\addcontentsline{toc}{section}{References}
 
-## References {.unnumbered}
+# References {.unnumbered .unlisted}
 
 ::: {#refs}
 :::
@@ -337,5 +347,9 @@ $$
      ══════════════════════════════════════════════════════════════════════════ -->
 
 \newpage
+\pagenumbering{gobble}
+\pagestyle{empty}
+\phantomsection
+\addcontentsline{toc}{section}{Appendix}
 
 {{< include Chapters/appendix.qmd >}}
